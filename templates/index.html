@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Translation App</title>
+</head>
+<body>
+    <h1>English to French Translator</h1>
+    <form id="translateForm">
+        <textarea id="text" name="text" rows="4" cols="50"></textarea><br>
+        <button type="button" onclick="translateText()">Translate</button>
+    </form>
+    <div id="result"></div>
+    <script>
+        function translateText() {  // Function name changed
+            const textInput = document.getElementById('text').value.trim();
+            
+            if (!textInput) {
+                alert("Please enter text to translate.");
+                return;
+            }
+    
+            const formData = new FormData();
+            formData.append("text", textInput);
+    
+            fetch('/translate', { 
+                method: 'POST', 
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('result').innerText = data.translation;
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+
+</body>
+</html>  
+
