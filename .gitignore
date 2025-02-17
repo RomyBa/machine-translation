@@ -1,0 +1,3 @@
+venv/
+.gradio/
+model/__pycache__/
